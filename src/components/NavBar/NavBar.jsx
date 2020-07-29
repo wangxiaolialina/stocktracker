@@ -3,18 +3,24 @@ import React from 'react';
 import './NavBar.css';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-
+import Form from 'react-bootstrap/Form'
 
 const NavBar = (props) => (
   <div>
-  <Navbar bg="dark" variant="dark">
-    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+  <Navbar bg="light" expand="lg">
+  <Navbar.Brand href="#home">Stock Tracker</Navbar.Brand>
+  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+  <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
       <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
+      <Nav.Link href="#link">Watchlist</Nav.Link>
     </Nav>
-  </Navbar>
+    <Form inline>
+      <Nav.Link href="/login">Login</Nav.Link>
+      <Nav.Link href="/signup">Signup</Nav.Link>
+    </Form>
+  </Navbar.Collapse>
+</Navbar>
   </div>)
 
 export default NavBar;
