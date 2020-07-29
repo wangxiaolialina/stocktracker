@@ -6,7 +6,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 
 const HomePage = () => (
-    <>
+    <div classname={styles.dataBody}>
       <NavBar/>
       <div className={styles.HomePageBackground}>
         <Form className="">
@@ -16,7 +16,7 @@ const HomePage = () => (
           </div>
         </Form>
       </div>
-    </>
+    </div>
   )
 
   export default HomePage;

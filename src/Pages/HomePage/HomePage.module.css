@@ -1,5 +1,6 @@
 .HomePageBackground {
   height: 50vh;
+  background-color: antiquewhite;
   background-image: url('/stock-market.jpg');
   display: flex;
   justify-content: center;
