@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import userService from '../../utils/userService';
+
+
 
 function Copyright() {
   return (
@@ -46,8 +49,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(props.name,props.email,props.password)
+      await userService.signup({name:props.name,email:props.email,password:props.password});
+      props.history.push('/')
+      // Let <App> know a user has signed up!
+      // Successfully signed up - show GamePage
+    } catch (err) {
+      // Invalid user data (probably duplicate email)
+      alert('Invalid Signup!');
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,29 +76,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} method="POST" onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="name"
+                name="signupname"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="Name"
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                value={props.name}
+                onChange={props.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,8 +99,10 @@ export default function SignUp() {
                 fullWidth
                 id="email"
                 label="Email Address"
-                name="email"
+                name="signupemail"
                 autoComplete="email"
+                value={props.email} 
+                onChange={props.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -100,11 +110,13 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
+                name="signuppassword"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={props.password}
+                onChange={props.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
