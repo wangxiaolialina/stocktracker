@@ -55,7 +55,6 @@ export default function SignUp(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(props.name,props.email,props.password)
       await userService.signup({name:props.name,email:props.email,password:props.password});
       props.history.push('/')
       // Let <App> know a user has signed up!
