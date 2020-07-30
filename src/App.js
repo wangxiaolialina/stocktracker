@@ -23,6 +23,7 @@ class App extends Component {
       user: null,
       symbol: null,
       quote: '',
+      news:[],
       // Initialize user if there's a token, otherwise null
       // user: userService.getUser()
     };
@@ -49,6 +50,9 @@ class App extends Component {
     this.setState({ quote });
   }
 
+  handleUpdateNews = (news) => {
+    this.setState({news});
+  }
   // handleSubmit = async (e) => {
   //   e.preventDefault();
   //   try {
@@ -77,8 +81,10 @@ class App extends Component {
                 handleChange={this.handleChange}
                 handleSearch={this.handleSearch}
                 handleUpdateQuote={this.handleUpdateQuote}
+                handleUpdateNews = {this.handleUpdateNews}
                 symbol = {this.state.symbol}
                 quote = {this.state.quote}
+                news = {this.state.news}
               />
             }/>
             <Route exact path='/signup' render={({ history }) => 
