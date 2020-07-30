@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import userService from '../../utils/userService';
 
 function Copyright() {
   return (
@@ -57,9 +58,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function SignInSide(props) {
   const classes = useStyles();
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await userService.login({email:props.email,password:props.password});
+      // Let <App> know a user has signed up!
+      props.handleSignupOrLogin();
+      // Successfully signed up - show GamePage
+      props.history.push('/');
+    } catch (err) {
+      // Use a modal or toast in your apps instead of alert
+      alert('Invalid Credentials!');
+    }
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -72,15 +85,17 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="loginemail"
               label="Email Address"
-              name="email"
+              name="loginemail"
+              value={props.email}
+              onChange={props.handleChange}
               autoComplete="email"
               autoFocus
             />
@@ -89,11 +104,13 @@ export default function SignInSide() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="loginpassword"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              value={props.password}
+              onChange={props.handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
