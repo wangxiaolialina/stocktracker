@@ -9,17 +9,35 @@ import MainContent from '../../components/MainContent/MainContent';
 export default function HomePage(props) {
   const handleSearch = async (e) => {
     e.preventDefault()
+
     try {
-      const quote = await stockService.getQuote(props.symbol);
-      props.handleUpdateQuote(quote);
+      let [quote, news] = await Promise.allSettled([stockService.getQuote(props.symbol), stockService.getNews(props.symbol)]);
+      console.log(quote,news);
+      props.handleUpdateQuote(quote.value);
+      props.handleUpdateNews(news.value);
     } catch (err) {
-      // Invalid user data (probably duplicate email)
-      alert(err);
+      console.log(err)
     }
+    // try {
+    //   let quote = await stockService.getQuote(props.symbol)
+    //   props.handleUpdateQuote(quote);
+    // } catch (err) {
+    //   // Invalid user data (probably duplicate email)
+    //   alert(err);
+    // }
+
+    // try {
+    //   let news = await stockService.getNews(props.symbol)
+    //   props.handleUpdateNews(news);
+
+    // } catch (err) {
+    //   // Invalid user data (probably duplicate email)
+    //   alert(err);
+    // }
   }
 
   return (
-    <div classname={styles.dataBody}>
+    <div className={styles.dataBody}>
       <NavBar user={props.user} handleLogout={props.handleLogout}/>
       <div className={styles.HomePageBackground}>
         <form method="POST" onSubmit={handleSearch}>
@@ -36,7 +54,7 @@ export default function HomePage(props) {
           </div>
         </form>
       </div>
-      <MainContent quote={props.quote} />
+      <MainContent quote={props.quote} news = {props.news} />
     </div>
   )
 }

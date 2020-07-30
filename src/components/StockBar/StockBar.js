@@ -1,17 +1,31 @@
 import React from 'react';
+import Table from 'react-bootstrap/Table'
 
 const StockBar = (props) => {
 
 
 
   return (
-    <div>
-      Open: {props.quote.o}
-      High: {props.quote.h}
-      Low: {props.quote.l}
-      Current: {props.quote.c}
-      Previous Closing: {props.quote.pc}
-    </div>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Open price of the day</th>
+          <th>High price of the day</th>
+          <th>Low price of the day</th>
+          <th>Current price</th>
+          <th>Previous close price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{props.quote.o}</td>
+          <td> {props.quote.h}</td>
+          <td>{props.quote.l}</td>
+          <td>{props.quote.c}</td>
+          <td>{props.quote.pc}</td>
+        </tr>
+      </tbody>
+    </Table>
   )
 }
 
