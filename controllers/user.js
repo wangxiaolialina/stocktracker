@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const Watchlist = require('../models/watchlist')
+
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
 
@@ -8,9 +10,13 @@ module.exports = {
 };
 
 async function signup(req, res) {
-  const user = new User(req.body);
+  let user = new User(req.body);
   try {
-    await user.save();
+    user = await user.save();
+    if(user) {
+      let watchlist = new Watchlist({stocks: [], user_id: user._id})
+      await watchlist.save();
+    }
     const token = createJWT(user);
     res.json({ token });
   } catch (err) {

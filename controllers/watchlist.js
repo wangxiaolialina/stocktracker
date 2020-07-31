@@ -1,23 +1,21 @@
 var Watchlist = require("../models/watchlist")
 
 module.exports = {
-  create,
+  get,
   update, 
   deleteStock, 
   deleteWatchlist,
 }
 
-async function create(req, res) {
+async function get(req, res) {
   let user = req.user
-  let body = req.body
-
 
   try {
-    await Watchlist.create({
-      'user_id': user._id,
-      'name': body.name
+    let watchlist = await Watchlist.findOne({
+      'user_id': user._id
     });
-    res.send(201);
+    
+    res.status(200).json(watchlist);
   } catch (err) {
     res.json({err});
   }
@@ -37,10 +35,10 @@ async function update(req, res) {
 
 async function deleteStock(req, res) {
   let user = req.user
-  let body = req.body
+  let symbol = req.params.symbol
 
   try {
-    await Watchlist.findOneAndUpdate({ 'user_id': user._id, 'name': req.body.name }, { "$pull": { "stocks": body.symbol }});
+    await Watchlist.findOneAndUpdate({ 'user_id': user._id, 'name': req.body.name }, { "$pull": { "stocks": symbol }});
     res.send(204);
   } catch (err) {
     res.json({err})
@@ -52,7 +50,7 @@ async function deleteWatchlist(req, res) {
   let body = req.body
 
   try {
-    await Watchlist.deleteOne({ 'user_id': user._id, 'name': req.body.name });
+    await Watchlist.findOneAndUpdate({ 'user_id': user._id, 'name': req.body.name }, {stocks: []});
     res.send(204);
   } catch (err) {
     res.json({err})
