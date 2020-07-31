@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import {  Route, Switch, Redirect } from 'react-router-dom';
+import {  Route, Switch } from 'react-router-dom';
 import SignUp from './components/SignupForm/Signup';
 import SignInSide from './components/SignInSide/SignInSide';
 import HomePage from './Pages/HomePage/HomePage'
 import userService from './utils/userService'
+import Watchlist from './Pages/Watchlist/Watchlist';
 
 // import  PropTypes from ‘prop-types’
 
@@ -20,12 +21,11 @@ class App extends Component {
       loginpassword:'',
       watchlist: [],
       message: '',
-      user: null,
       symbol: null,
       quote: '',
       news:[],
       // Initialize user if there's a token, otherwise null
-      // user: userService.getUser()
+      user: userService.getUser()
     };
 
   }
@@ -35,6 +35,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
+    console.log("clicked");
     userService.logout();
     this.setState({ user: null });
   }
@@ -53,27 +54,14 @@ class App extends Component {
   handleUpdateNews = (news) => {
     this.setState({news});
   }
-  // handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await userService.signup({name:this.state.signupname,email:this.state.signupemail,password:this.state.password});
-  //     // Let <App> know a user has signed up!
-  //     // Successfully signed up - show GamePage
-  //   } catch (err) {
-  //     // Invalid user data (probably duplicate email)
-  //     this.updateMessage(err.message);
-  //   }
-  // }
 
-
- 
   handleSignupOrLogin = () => {
     this.setState({user: userService.getUser()});
   }
 
   render() {
     return (
-      <div class="App">
+      <div className="App">
           <Switch>
             <Route exact path='/' render={() => 
               <HomePage user={this.state.user}
@@ -104,10 +92,7 @@ class App extends Component {
               />
             }/>
             <Route exact path='/watchlist' render={({ history }) => 
-              this.state.user ? 
-              <HomePage symbol={this.state.symbol}  handleChange={this.handleChange} />
-              :
-              <Redirect to='/login'/>
+              <Watchlist user={this.state.user}/>
             }/>
           </Switch>
       </div>

@@ -25,11 +25,10 @@ function addToWatchlist(symbol) {
   const options = {
     method: "POST",
     headers: {
+      'Content-Type': 'application/json',
       Authorization: "Bearer " + tokenService.getToken(),
     },
-    body: {
-      symbol: symbol
-    }
+    body: JSON.stringify({symbol: symbol})
   };
 
   let url = BASE_URL;

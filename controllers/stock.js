@@ -8,7 +8,8 @@ const finnhubClient = new finnhub.DefaultApi()
 
 module.exports = {
   search,
-  searchNews
+  searchNews,
+  getQuotes
 }
 
 async function search(req, res) {
@@ -35,29 +36,29 @@ async function searchNews(req, res) {
   });
 }
 
-// async function getQuotes(req, res) {
-//   let result = []
+async function getQuotes(req, res) {
+  let result = []
+  console.log(req.body.stocks)
+  req.body.stocks = req.body.stocks.filter(function (el) {
+    return el != null;
+  });
   
-//   req.body.stocks = req.body.stocks.filter(function (el) {
-//     return el != null;
-//   });
-  
-//   let numCalls = req.body.stocks.length
+  let numCalls = req.body.stocks.length
 
-//   if(numCalls === 0){
-//     res.status(200).send({})
-//   }
+  if(numCalls === 0){
+    res.status(200).send({})
+  }
 
-//   req.body.stocks.forEach(async symbol => {
-//     finnhubClient.quote(symbol, (error, data, response) => {
-//       if(error){
-//         console.log("WTF")
-//       } else {
-//         result.push({...data, symbol: symbol})
-//         if(numCalls == result.length){
-//           res.status(200).send(result);
-//         }
-//       }
-//     });
-//   });
-// }
+  req.body.stocks.forEach(async symbol => {
+    finnhubClient.quote(symbol, (error, data, response) => {
+      if(error){
+        console.log("WTF")
+      } else {
+        result.push({...data, symbol: symbol})
+        if(numCalls == result.length){
+          res.status(200).send(result);
+        }
+      }
+    });
+  });
+}

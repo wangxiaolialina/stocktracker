@@ -4,13 +4,14 @@ import './NavBar.css';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Form from 'react-bootstrap/Form'
+import {Link} from 'react-router-dom'
 
 const NavBar = (props) => {
   const rightContent = props.user ?
     <div>
       <Form inline>
         <Nav.Link href="/watchlist">{props.user.name}</Nav.Link>
-        <Nav.Link href="" onClick={props.handleLogout}>Sign Out</Nav.Link>
+        <Link to="" onClick={props.handleLogout}>Sign Out</Link>
       </Form>
     </div>
     :
@@ -28,7 +29,7 @@ const NavBar = (props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/watchlist">Watchlist</Nav.Link>
         </Nav>
           {rightContent}
