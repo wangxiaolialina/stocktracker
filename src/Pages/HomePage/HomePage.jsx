@@ -12,9 +12,9 @@ export default function HomePage(props) {
 
     try {
       let [quote, news] = await Promise.allSettled([stockService.getQuote(props.symbol), stockService.getNews(props.symbol)]);
-      console.log(quote,news);
       props.handleUpdateQuote(quote.value);
       props.handleUpdateNews(news.value);
+
     } catch (err) {
       console.log(err)
     }
