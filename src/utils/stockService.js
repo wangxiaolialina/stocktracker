@@ -5,7 +5,8 @@ const BASE_URL = '/api/stock/';
 
 export default {
   getQuote,
-  getNews
+  getNews,
+  getAllQuotes,
 };
 
 function getQuote(symbol) {
@@ -30,4 +31,18 @@ function getNews(symbol) {
   
   let url = BASE_URL + "companynews/" + symbol.toUpperCase()
   return fetch(url, options).then(res => res.json());
+}
+
+function getAllQuotes(symbols) {
+    const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + tokenService.getToken()
+        },
+        body: JSON.stringify({stocks: [...symbols]})
+      };
+      
+      let url = BASE_URL + "getAll"
+      return fetch(url, options).then(res => res.json());
 }

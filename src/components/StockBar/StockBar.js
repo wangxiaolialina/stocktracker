@@ -3,6 +3,18 @@ import Table from 'react-bootstrap/Table'
 
 const StockBar = (props) => {
 
+  let contents = props.contents.map((quote, idx) => {
+    return (
+      <tr key={idx}>
+          <td>{quote.symbol}</td>
+          <td>{quote.o}</td>
+          <td> {quote.h}</td>
+          <td>{quote.l}</td>
+          <td>{quote.c}</td>
+          <td>{quote.pc}</td>
+        </tr>
+    )
+  })
 
 
   return (
@@ -18,14 +30,7 @@ const StockBar = (props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{props.quote.symbol}</td>
-          <td>{props.quote.o}</td>
-          <td> {props.quote.h}</td>
-          <td>{props.quote.l}</td>
-          <td>{props.quote.c}</td>
-          <td>{props.quote.pc}</td>
-        </tr>
+       {contents}
       </tbody>
     </Table>
   )
