@@ -7,7 +7,7 @@ class MainContent extends Component {
   render() {
     return (
       <>
-      <div><StockBar {...this.props} /></div>
+      <div><StockBar contents={[this.props.quote]} /></div>
       <div className={styles.newscard}><News {...this.props} /></div>
       <div><AddtoWatchlistButton {...this.props}/></div>
       </>
