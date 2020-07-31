@@ -9,6 +9,7 @@ const StockBar = (props) => {
     <Table striped bordered hover>
       <thead>
         <tr>
+          <th>Symbol</th>
           <th>Open price of the day</th>
           <th>High price of the day</th>
           <th>Low price of the day</th>
@@ -18,6 +19,7 @@ const StockBar = (props) => {
       </thead>
       <tbody>
         <tr>
+          <td>{props.quote.symbol}</td>
           <td>{props.quote.o}</td>
           <td> {props.quote.h}</td>
           <td>{props.quote.l}</td>
