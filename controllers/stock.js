@@ -8,9 +8,7 @@ const finnhubClient = new finnhub.DefaultApi()
 
 module.exports = {
   search,
-  searchNews,
-  getQuotes
-
+  searchNews
 }
 
 async function search(req, res) {
